@@ -1,0 +1,35 @@
+option space PXE;
+option PXE.mtftp-ip               code 1 = ip-address;  
+option PXE.mtftp-cport            code 2 = unsigned integer 16;
+option PXE.mtftp-sport            code 3 = unsigned integer 16;
+option PXE.mtftp-tmout            code 4 = unsigned integer 8;
+option PXE.mtftp-delay            code 5 = unsigned integer 8;
+option PXE.discovery-control      code 6 = unsigned integer 8;
+option PXE.discovery-mcast-addr   code 7 = ip-address;
+class "pxeclients" {
+    match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
+    option vendor-class-identifier "PXEClient";
+    vendor-option-space PXE;
+    # At least one of the vendor-specific PXE options must be set in
+    # order for the client boot ROMs to realize that we are a PXE-compliant
+    # server.  We set the MCAST IP address to 0.0.0.0 to tell the boot ROM
+    # that we can't provide multicast TFTP (address 0.0.0.0 means no
+    # address).
+    option PXE.mtftp-ip 0.0.0.0;
+    # This is the name of the file the boot ROMs should download.
+    filename "pxelinux.0";
+    # This is the name of the server they should get it from.
+    next-server 192.168.0.1;
+}
+ddns-update-style interim;
+ignore client-updates;
+default-lease-time 1200;
+max-lease-time 9200;
+option subnet-mask 255.255.255.0;
+option broadcast-address 192.168.0.255;
+option routers 192.168.0.254;
+option domain-name-servers 192.168.0.1,192.168.0.2;
+option domain-name "mydomain.org";
+subnet 192.168.0.0 netmask 255.255.255.0 {
+range 192.168.0.10 192.168.0.100;
+} 

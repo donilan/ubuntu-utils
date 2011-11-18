@@ -1,0 +1,20 @@
+say ====================================================
+say Doni Lan Network Boot
+say If you enter no option within 3 seconds, the system
+say will boot into the Terminal Server (option ts)
+say .
+say Boot Options:
+say ts: Terminal Server (Thinstation Linux)
+say nbd: Net-Enabled MS-DOS (NetBootDisk)
+say .
+say ====================================================
+
+DEFAULT vesamenu.c32
+PROMPT 0
+TIMEOUT 100
+
+MENU title Doni Lan pxe server v0.1
+MENU BACKGROUND pxelinux.cfg/background.jpg
+
+LABEL test
+MENU LABEL test
