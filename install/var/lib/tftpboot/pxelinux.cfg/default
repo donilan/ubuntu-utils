@@ -9,12 +9,35 @@ say nbd: Net-Enabled MS-DOS (NetBootDisk)
 say .
 say ====================================================
 
+
+
 DEFAULT vesamenu.c32
 PROMPT 0
-TIMEOUT 100
+TIMEOUT 600
 
 MENU title Doni Lan pxe server v0.1
-MENU BACKGROUND pxelinux.cfg/background.jpg
 
-LABEL test
-MENU LABEL test
+LABEL vmlinuz
+MENU LABEL Vmlinuz 3.0.0.12 generic
+kernel linux/vmlinuz
+append initrd=linux/initrd.img
+
+LABEL MaxDOS
+MEMU Max DOS V7.1
+kernel memdisk c=555 h=2 s=18 floppy
+append initrd=dos/MaxDOS.img
+
+LABEL iso
+MENU ISO FILE
+kernel memdisk c=1024 h=256 s=63 harddisk
+append iso initrd=iso/ubuntu-10.04-desktop-i386.iso
+
+LABEL MAX_DOS_ISO
+MENU max dos iso
+kernel memdisk c=1024 h=256 s=63 harddisk
+append iso initrd=iso/maxdos_71plus_iso.iso
+
+LABEL YLMF
+MENU YLMF xp3
+kernel memdisk c=1024 h=256 s=63 harddisk
+append iso initrd=iso/ylmf2.iso
