@@ -1,3 +1,0 @@
-sudo apt-get install dhcp tftpd-hpa
-sed -i 's/=\"no\"/=\"yes\"/' /etc/default/udhcpd 
-sudo ln -s /usr/lib/syslinux/* /var/lib/tftpboot/
