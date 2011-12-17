@@ -18,26 +18,21 @@ TIMEOUT 600
 MENU title Doni Lan pxe server v0.1
 
 LABEL vmlinuz
-MENU LABEL Vmlinuz 3.0.0.12 generic
 kernel linux/vmlinuz
-append initrd=linux/initrd.img
+append initrd=linux/initrd.img rw nfsroot=192.168.0.1:/var/nfsroot ip=192.168.0.254:192.168.0.1:192.168.0.1:255.255.255.0:llama0::off noapic acpi=off
+#append initrd=linux/initrd.img 
 
 LABEL MaxDOS
 MEMU Max DOS V7.1
 kernel memdisk c=555 h=2 s=18 floppy
 append initrd=dos/MaxDOS.img
 
-LABEL iso
-MENU ISO FILE
+LABEL Ubuntu
+MENU Ubuntu 10.04 desktop i386
 kernel memdisk c=1024 h=256 s=63 harddisk
 append iso initrd=iso/ubuntu-10.04-desktop-i386.iso
 
-LABEL MAX_DOS_ISO
-MENU max dos iso
+LABEL Ylmf
+MENU ylmf
 kernel memdisk c=1024 h=256 s=63 harddisk
-append iso initrd=iso/maxdos_71plus_iso.iso
-
-LABEL YLMF
-MENU YLMF xp3
-kernel memdisk c=1024 h=256 s=63 harddisk
-append iso initrd=iso/ylmf2.iso
+append iso initrd=iso/ylmf.iso
