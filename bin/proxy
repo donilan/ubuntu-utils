@@ -1,0 +1,7 @@
+#!/bin/sh
+
+PROXY_HOME=~/software/linux/goagent/local/
+PROXY=$PROXY_HOME/proxy.py
+
+cd $PROXY_HOME
+$PROXY
