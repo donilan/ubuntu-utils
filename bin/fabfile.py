@@ -1,19 +1,21 @@
 import os, getpass
-#from sys.exit import SystemExit
-from fabric.api import cd, env, get, run, task, sudo, settings
+
+from fabric.api import cd, env, get, run, task, sudo, settings, local
 from fabric.contrib import files
 from argyle import system
 
 PROJECT_ROOT = os.path.dirname(__file__)
+DJANGO_ADMIN = '/usr/local/bin/django-admin.py'
+LOCALHOST_USER = 'd' ## Fixed this for you
 
-@task
+#@task
 def staging():
     env.environment = 'staging'
     env.hosts = []
     env.branch = 'master'
     env.server_name = ''
 
-@task
+#@task
 def production():
     env.environment = 'production'
     env.hosts = []
@@ -51,11 +53,18 @@ def create_git_project(project_name):
                 '\tfab -H %s -u root system.install_packages:git' \
                 % (env.host)
 
-
-
-
 @task
+def create_django_project(project_name):
+    local(u'%s startproject ' \
+            '--template=https://github.com/donilan' \
+            '/django-project-template/zipball/master' \
+            ' --extension=py,rst %s' % (DJANGO_ADMIN, project_name))
+
+
 def create_user(name, groups=None, key_file=None):
+    """
+    Create system user
+    """
     groups = groups or []
     if not system.user_exists(name):
         for group in groups:
@@ -77,10 +86,8 @@ def su(user, command):
     with settings(sudo_prefix="su %s -c " % user, sudo_prompt="Password:"):
         return sudo(command)
 
-@task
-def test():
-    """
-    Change ssh_config
-    """
+#def test():
+#    """
+#    Change ssh_config
+#    """
 #    files.sed(u'/etc/ssh/sshd_config', u'Port 2222$', u'Port 22', use_sudo=True)
-

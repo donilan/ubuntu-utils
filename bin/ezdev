@@ -1,5 +1,5 @@
 #!/bin/sh
 
 PATH=`dirname $(readlink -f $0)`
-echo $PATH
+
 /usr/local/bin/fab -f $PATH/fabfile.py $@
